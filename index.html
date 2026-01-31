@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Raabta</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1c1c2b, #000);
+  font-family: 'Georgia', serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Floating hearts & stars */
+.heart, .star {
+  position: absolute;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
+
+.heart {
+  color: #ff6b81;
+  font-size: 20px;
+}
+
+.star {
+  color: #fff;
+  font-size: 10px;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Main container */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 850px;
+  margin: auto;
+  padding: 30px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.15);
+  margin-top: 40px;
+}
+
+/* Typing effect */
+.line {
+  font-size: 18px;
+  line-height: 1.9;
+  margin-bottom: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #fff;
+  width: 0;
+}
+
+/* Ending screen */
+#ending {
+  display: none;
+  text-align: center;
+  font-size: 36px;
+  margin-top: 40px;
+  animation: fadeIn 3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+audio {
+  width: 100%;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts & stars -->
+<script>
+for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(h);
+}
+for(let i=0;i<40;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.innerHTML="✦";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(s);
+}
+</script>
+
+<div class="container">
+
+<audio controls autoplay loop>
+  <source src="https://ia800905.us.archive.org/30/items/RaabtaInstrumental/RaabtaInstrumental.mp3" type="audio/mpeg">
+</audio>
+
+<div id="poetry">
+  <div class="line">Jo hua nah tha kabhi vo us raat hua mujhko</div>
+  <div class="line">apne pn ka ehsaas hua</div>
+  <div class="line">31 ki vo raat thi aur vo kapte hue haath</div>
+  <div class="line">jab aankhon ne vo message dekha</div>
+  <div class="line">to mujhe khud pr bhi vishwaas nah hua</div>
+  <div class="line">uska vo message jano mere rooh ko chu gaya</div>
+  <div class="line">mere dil ne dhadakna band kar diya</div>
+  <div class="line">meri aankhon se aansu behna shuru hua</div>
+  <div class="line">vo jo tha vo bs ek paigaam nah tha</div>
+  <div class="line">vo mere liye geeta quran bhi tha</div>
+  <div class="line">aur us rat mano meri zindgi ki nayi shurwat hui..</div>
+</div>
+
+<div id="ending">For You ❤️</div>
+
+</div>
+
+<script>
+const lines=document.querySelectorAll(".line");
+let i=0;
+
+function typeLine(line, callback){
+  let text=line.innerText;
+  line.innerText="";
+  let idx=0;
+  line.style.width="0";
+
+  let interval=setInterval(()=>{
+    line.innerText+=text[idx];
+    line.style.width=(idx+1)+"ch";
+    idx++;
+    if(idx===text.length){
+      clearInterval(interval);
+      line.style.border="none";
+      callback();
+    }
+  },60);
+}
+
+function start(){
+  if(i<lines.length){
+    typeLine(lines[i], ()=>{
+      i++;
+      setTimeout(start,400);
+    });
+  } else {
+    document.getElementById("ending").style.display="block";
+  }
+}
+
+start();
+</script>
+
+</body>
+</html>
